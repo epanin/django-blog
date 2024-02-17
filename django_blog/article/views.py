@@ -4,4 +4,9 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse('article')
+    appname = 'Article'
+    return render(
+        request, 
+        'articles/index.html',
+        context={'appname': appname}
+        )
