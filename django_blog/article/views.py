@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse
 
 from typing import Any
@@ -8,27 +8,11 @@ from typing import Any
 from .models import Article
 
 
-class ArticleView(View):
+class ArticleView(View):    
     
-    def __init__(self, **kwargs: Any) -> None:
-        super().__init__(**kwargs)
-        self.context = {
-            'appname': 'Articles!',
-        }
-        self.template_name = 'articles/index.html'
-    
-    
-    
-    def get(self, *args, **kwargs):
-        
-        tag = kwargs.get('tag', None)
-        article_id = kwargs.get('article_id', None)
-        if tag and article_id:
-            self.context['tag'] = tag
-            self.context['article_id'] = article_id
-            return render(self.request, self.template_name, self.context)
-
-        return redirect(reverse('article', kwargs={'tag': 'python', 'article_id': 42}))            
+    def get(self, request, *args, **kwargs):
+        article = get_object_or_404(Article, id=kwargs['id'])
+        return render(request, 'articles/show.html', context={'article': article})           
          
 
 class IndexView(View):
