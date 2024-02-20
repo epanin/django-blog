@@ -1,12 +1,11 @@
 from django.shortcuts import render
+from django.views import View
+from django.shortcuts import redirect
+from django.urls import reverse
 
 from typing import Any
 
-from django.views import View
-
-from django.shortcuts import redirect
-
-from django.urls import reverse
+from .models import Article
 
 
 class ArticleView(View):
@@ -31,3 +30,9 @@ class ArticleView(View):
 
         return redirect(reverse('article', kwargs={'tag': 'python', 'article_id': 42}))            
          
+
+class IndexView(View):
+
+    def get(self, request, *args, **kwargs):
+        articles = Article.objects.all()[:15]
+        return render(request, 'articles/index.html', context={'articles': articles})
