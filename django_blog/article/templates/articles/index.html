@@ -7,4 +7,8 @@
 <h2>{{ article.name }}</h2>
 <p>{{ article.body|slice:200 }}... <a href="{{ article.id }}">Подробнее</a></p>
 {% endfor %}
+<br>
+<form action="{% url 'article_create' %}" method="get">
+    <input type="submit" value="Создать новую статью">
+</form>
 {% endblock %}

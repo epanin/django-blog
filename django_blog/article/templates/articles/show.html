@@ -2,5 +2,13 @@
 
 {% block content %}
 <h1>{{ article.name }}</h1>
-<p>{{ article.body }}</p>
+<p>
+    {{ article.body }}
+    <a href="{% url 'article_update' id=article.id %}">Изменить</a>
+</p>
+<br>
+<form action="{% url 'article_delete' id=article.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Удалить">
+</form>
 {% endblock %}
